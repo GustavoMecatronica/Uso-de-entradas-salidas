@@ -1,0 +1,269 @@
+CCS PCM C Compiler, Version 5.091, 13314               22-feb.-21 16:23
+
+               Filename:   C:\Users\Gustavo\Documents\UNIVERSIDAD\5TO CUATRIMESTRE\MICROCONTROLADORES\MANEJO_IN-OUT\MANEJO_IN-OUT.lst
+
+               ROM used:   170 words (2%)
+                           Largest free fragment is 2048
+               RAM used:   10 (3%) at main() level
+                           11 (3%) worst case
+               Stack used: 1 locations
+               Stack size: 8
+
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   019
+0003:  NOP
+.................... #include<16F887.h>
+.................... //////////// Standard Header file for the PIC16F887 device ////////////////
+.................... ///////////////////////////////////////////////////////////////////////////
+.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          ////
+.................... //// This source code may only be used by licensed users of the CCS C  ////
+.................... //// compiler.  This source code may only be distributed to other      ////
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction ////
+.................... //// or distribution is permitted without written permission.          ////
+.................... //// Derivative programs created using this software in object code    ////
+.................... //// form are not restricted in any way.                               ////
+.................... ///////////////////////////////////////////////////////////////////////////
+.................... #device PIC16F887
+.................... 
+.................... #list
+.................... 
+.................... #fuses XT, NOWDT, MCLR
+.................... #use delay(internal=4M)
+0004:  MOVLW  25
+0005:  MOVWF  04
+0006:  BCF    03.7
+0007:  MOVF   00,W
+0008:  BTFSC  03.2
+0009:  GOTO   018
+000A:  MOVLW  01
+000B:  MOVWF  78
+000C:  CLRF   77
+000D:  DECFSZ 77,F
+000E:  GOTO   00D
+000F:  DECFSZ 78,F
+0010:  GOTO   00C
+0011:  MOVLW  4A
+0012:  MOVWF  77
+0013:  DECFSZ 77,F
+0014:  GOTO   013
+0015:  GOTO   016
+0016:  DECFSZ 00,F
+0017:  GOTO   00A
+0018:  RETURN
+.................... #byte PORTA=5
+.................... #byte PORTB=6
+.................... 
+.................... #define S0 PORTA,0
+.................... #define LED0 PORTB,0
+.................... #define LED1 PORTB,1
+.................... #define LED2 PORTB,2
+.................... int contador=0;
+.................... int condicion=0;
+.................... int cond1=0;
+.................... void main(){
+0019:  MOVF   03,W
+001A:  ANDLW  1F
+001B:  MOVWF  03
+001C:  MOVLW  61
+001D:  BSF    03.5
+001E:  MOVWF  0F
+001F:  CLRF   10
+0020:  MOVF   0F,W
+0021:  BCF    03.5
+0022:  CLRF   20
+0023:  CLRF   21
+0024:  CLRF   22
+0025:  BSF    03.5
+0026:  BSF    03.6
+0027:  MOVF   09,W
+0028:  ANDLW  C0
+0029:  MOVWF  09
+002A:  BCF    03.6
+002B:  BCF    1F.4
+002C:  BCF    1F.5
+002D:  MOVLW  00
+002E:  BSF    03.6
+002F:  MOVWF  08
+0030:  BCF    03.5
+0031:  CLRF   07
+0032:  CLRF   08
+0033:  CLRF   09
+0034:  BCF    03.7
+.................... set_tris_a(0xFF);
+0035:  MOVLW  FF
+0036:  BSF    03.5
+0037:  BCF    03.6
+0038:  MOVWF  05
+.................... set_tris_b(0x00);
+0039:  MOVLW  00
+003A:  MOVWF  06
+.................... portb=(0x00);//iniciamos el puerto b en 0, apagado.
+003B:  BCF    03.5
+003C:  CLRF   06
+.................... 
+.................... while(true){
+....................       
+....................       if(bit_test(S0)){
+003D:  BTFSS  05.0
+003E:  GOTO   044
+....................          contador++;
+003F:  INCF   20,F
+....................             if(contador==4)//reset de contador
+0040:  MOVF   20,W
+0041:  SUBLW  04
+0042:  BTFSC  03.2
+....................             contador=0;
+0043:  CLRF   20
+....................       }
+....................       
+....................       switch(contador){
+0044:  MOVF   20,W
+0045:  XORLW  01
+0046:  BTFSC  03.2
+0047:  GOTO   04F
+0048:  XORLW  03
+0049:  BTFSC  03.2
+004A:  GOTO   06C
+004B:  XORLW  01
+004C:  BTFSC  03.2
+004D:  GOTO   08A
+004E:  GOTO   0A7
+....................          case 1://encender LED0
+....................             if(condicion!=1){      
+004F:  DECFSZ 21,W
+0050:  GOTO   052
+0051:  GOTO   06B
+....................                for(int i=0;i<=2;i++){
+0052:  CLRF   23
+0053:  MOVF   23,W
+0054:  SUBLW  02
+0055:  BTFSS  03.0
+0056:  GOTO   069
+....................                 bit_set(LED0);
+0057:  BSF    06.0
+....................                 delay_ms(500);
+0058:  MOVLW  02
+0059:  MOVWF  24
+005A:  MOVLW  FA
+005B:  MOVWF  25
+005C:  CALL   004
+005D:  DECFSZ 24,F
+005E:  GOTO   05A
+....................                 bit_clear(LED0);
+005F:  BCF    06.0
+....................                 delay_ms(500);
+0060:  MOVLW  02
+0061:  MOVWF  24
+0062:  MOVLW  FA
+0063:  MOVWF  25
+0064:  CALL   004
+0065:  DECFSZ 24,F
+0066:  GOTO   062
+0067:  INCF   23,F
+0068:  GOTO   053
+....................                } 
+....................                condicion=1;
+0069:  MOVLW  01
+006A:  MOVWF  21
+....................             }
+....................             break;
+006B:  GOTO   0A8
+....................          case 2:// encender LED1
+....................             if(condicion!=2){      
+006C:  MOVF   21,W
+006D:  SUBLW  02
+006E:  BTFSC  03.2
+006F:  GOTO   089
+....................                while(cond1<=2){
+0070:  MOVF   22,W
+0071:  SUBLW  02
+0072:  BTFSS  03.0
+0073:  GOTO   086
+....................                   bit_set(LED1);
+0074:  BSF    06.1
+....................                   delay_ms(500);
+0075:  MOVLW  02
+0076:  MOVWF  24
+0077:  MOVLW  FA
+0078:  MOVWF  25
+0079:  CALL   004
+007A:  DECFSZ 24,F
+007B:  GOTO   077
+....................                   bit_clear(LED1);
+007C:  BCF    06.1
+....................                   delay_ms(500);
+007D:  MOVLW  02
+007E:  MOVWF  24
+007F:  MOVLW  FA
+0080:  MOVWF  25
+0081:  CALL   004
+0082:  DECFSZ 24,F
+0083:  GOTO   07F
+....................                   cond1++;
+0084:  INCF   22,F
+0085:  GOTO   070
+....................                   }
+....................                condicion=2;
+0086:  MOVLW  02
+0087:  MOVWF  21
+....................                cond1=0;
+0088:  CLRF   22
+....................             }   
+....................             break;
+0089:  GOTO   0A8
+....................          case 3://encender LED2
+....................             if(condicion!=3){      
+008A:  MOVF   21,W
+008B:  SUBLW  03
+008C:  BTFSC  03.2
+008D:  GOTO   0A6
+....................                do{
+....................                   bit_set(LED2);
+008E:  BSF    06.2
+....................                   delay_ms(500);
+008F:  MOVLW  02
+0090:  MOVWF  24
+0091:  MOVLW  FA
+0092:  MOVWF  25
+0093:  CALL   004
+0094:  DECFSZ 24,F
+0095:  GOTO   091
+....................                   bit_clear(LED2);
+0096:  BCF    06.2
+....................                   delay_ms(500);
+0097:  MOVLW  02
+0098:  MOVWF  24
+0099:  MOVLW  FA
+009A:  MOVWF  25
+009B:  CALL   004
+009C:  DECFSZ 24,F
+009D:  GOTO   099
+....................                   cond1++;
+009E:  INCF   22,F
+....................                   }while(cond1<=2);
+009F:  MOVF   22,W
+00A0:  SUBLW  02
+00A1:  BTFSC  03.0
+00A2:  GOTO   08E
+....................                   condicion=3;
+00A3:  MOVLW  03
+00A4:  MOVWF  21
+....................                   cond1=0;
+00A5:  CLRF   22
+....................             }
+....................             break;
+00A6:  GOTO   0A8
+....................          default:
+....................          portb=0x00;
+00A7:  CLRF   06
+....................             break;
+....................       }
+00A8:  GOTO   03D
+....................    }
+.................... }
+00A9:  SLEEP
+
+Configuration Fuses:
+   Word  1: 2FE4   INTRC_IO NOWDT PUT MCLR NOPROTECT NOCPD BROWNOUT IESO FCMEN NOLVP NODEBUG
+   Word  2: 3FFF   BORV40 NOWRT

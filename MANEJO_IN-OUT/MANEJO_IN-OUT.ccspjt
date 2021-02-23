@@ -1,0 +1,42 @@
+[PROJECT]
+Target=MANEJO_IN-OUT.hex
+Processor_Text=PIC16F887
+CCSVersion=5.091
+Compiler=PCM
+[Target Data]
+FileList=MANEJO_IN-OUT.c
+[MANEJO_IN-OUT.c]
+Type=4
+[mru-list]
+1=MANEJO_IN-OUT.c
+
+[defines]
+buildcount=4
+
+[Opened Files]
+1=MANEJO_IN-OUT.c
+t1=41
+Count=1
+
+[ProjectLog]
+Days=1
+D1=22-02-2021
+D1_L=8
+D1_L1=[39193]Stopped Editing.
+D1_L2=[40054]Project Closed.
+D1_L3=[53452]Project Opened.
+D1_L4=[54704]Started Editing.
+D1_L5=[55907]Stopped Editing.
+D1_L6=[58459]Started Editing.
+D1_L7=[59306]Stopped Editing.
+TotalEdit=25
+TotalDebug=0
+D1_E=25
+D1_D=0
+D1_L8=[59531]Project Closed.
+
+[fileformats]
+forcecoff=0
+[Units]
+Count=1
+1=MANEJO_IN-OUT (main)
